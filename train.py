@@ -6,12 +6,12 @@ import tensorflow_datasets as tfds;
 from download_dataset import parse_function;
 from models import WGAN;
 
-batch_size = 1;
+batch_size = 100;
 
 def main():
 
   wgan = WGAN();
-  optimizer = tf.keras.optimizers.Adam(learning_rate = tf.keras.optimizers.schedules.InverseTimeDecay(1e-2, 0.3, 100), beta_1 = 0.5);
+  optimizer = tf.keras.optimizers.Adam(learning_rate = tf.keras.optimizers.schedules.InverseTimeDecay(1e-4, 0.3, 100), beta_1 = 0.5);
   trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(100).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE);
   checkpoint = tf.train.Checkpoint(model = wgan, optimizer = optimizer, optimizer_step = optimizer.iterations);
   log = tf.summary.create_file_writer('checkpoints');
