@@ -26,7 +26,7 @@ def main():
     optimizer.apply_gradients(zip(d_grads, wgan.D.trainable_variables));
     optimizer.apply_gradients(zip(g_grads, wgan.G.trainable_variables));
     if tf.equal(optimizer.iterations % 100, 0):
-      r = tf.random.normal((1, 128), dtype = tf.float64);
+      r = tf.random.normal((1, 128), dtype = tf.float32);
       fake = wgan.G(r);
       fake = tf.cast(fake, dtype = tf.uint8);
       with log.as_default():
