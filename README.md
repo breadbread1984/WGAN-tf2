@@ -16,4 +16,8 @@ python3 train.py
 ```
 
 ## how to test
+test the generator with the following command
 
+```bash
+python3 test.py
+```
