@@ -11,7 +11,7 @@ batch_size = 100;
 def main():
 
   wgan = WGAN();
-  optimizer = tf.keras.optimizers.Adam(learning_rate = tf.keras.optimizers.schedules.InverseTimeDecay(1e-4, 0.3, 100), beta_1 = 0.5);
+  optimizer = tf.keras.optimizers.Adam(learning_rate = 1e-4, beta_1 = 0.5);
   trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(100).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE);
   checkpoint = tf.train.Checkpoint(model = wgan, optimizer = optimizer, optimizer_step = optimizer.iterations);
   log = tf.summary.create_file_writer('checkpoints');
@@ -27,7 +27,7 @@ def main():
     optimizer.apply_gradients(zip(g_grads, wgan.G.trainable_variables));
     if tf.equal(optimizer.iterations % 100, 0):
       r = tf.random.normal((1, 128), dtype = tf.float32);
-      fake = tf.clip_by_value(wgan.G(r),clip_value_min = 0., clip_value_max = 255.);
+      fake = tf.clip_by_value(wgan.G(r) * 255.,clip_value_min = 0., clip_value_max = 255.);
       fake = tf.cast(fake, dtype = tf.uint8);
       with log.as_default():
         tf.summary.scalar('discriminator loss', avg_d_loss.result(), step = optimizer.iterations);
