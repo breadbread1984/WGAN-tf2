@@ -6,7 +6,7 @@ import tensorflow_datasets as tfds;
 from download_dataset import parse_function;
 from models import WGAN;
 
-batch_size = 100;
+batch_size = 1;
 
 def main():
 
