@@ -6,23 +6,23 @@ from download_dataset import parse_function;
 def Generator(input_dims = 128, inner_channels = 64):
 
   inputs = tf.keras.Input((128,));
-  results = tf.keras.layers.Dense(units = 4 * 4 * 4 * inner_channels, activation = tf.keras.layers.ReLU())(inputs);
+  results = tf.keras.layers.Dense(units = 4 * 4 * 4 * inner_channels, kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(inputs);
   results = tf.keras.layers.Reshape((4, 4, 4 * inner_channels))(results);
-  results = tf.keras.layers.Conv2DTranspose(filters = 2 * inner_channels, kernel_size = (5,5), activation = tf.keras.layers.ReLU())(results);
+  results = tf.keras.layers.Conv2DTranspose(filters = 2 * inner_channels, kernel_size = (5,5), kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(results);
   results = tf.keras.layers.Lambda(lambda x: x[:,:7,:7,:])(results);
-  results = tf.keras.layers.Conv2DTranspose(filters = inner_channels, kernel_size = (5,5), activation = tf.keras.layers.ReLU())(results);
-  results = tf.keras.layers.Conv2DTranspose(filters = 1, kernel_size = (8,8), strides = (2,2))(results);
+  results = tf.keras.layers.Conv2DTranspose(filters = inner_channels, kernel_size = (5,5), kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(results);
+  results = tf.keras.layers.Conv2DTranspose(filters = 1, kernel_size = (8,8), kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), strides = (2,2))(results);
   results = tf.keras.layers.Lambda(lambda x: tf.math.sigmoid(x))(results);
   return tf.keras.Model(inputs = inputs, outputs = results);
 
 def Discriminator(inner_channels = 128):
 
   inputs = tf.keras.Input((28,28,1));
-  results = tf.keras.layers.Conv2D(filters = inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', activation = tf.keras.layers.ReLU())(inputs);
-  results = tf.keras.layers.Conv2D(filters = 2 * inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', activation = tf.keras.layers.ReLU())(results);
-  results = tf.keras.layers.Conv2D(filters = 4 * inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', activation = tf.keras.layers.ReLU())(results);
+  results = tf.keras.layers.Conv2D(filters = inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(inputs);
+  results = tf.keras.layers.Conv2D(filters = 2 * inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(results);
+  results = tf.keras.layers.Conv2D(filters = 4 * inner_channels, kernel_size = (5, 5), strides = (2, 2), padding = 'same', kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(results);
   results = tf.keras.layers.Flatten()(results);
-  results = tf.keras.layers.Dense(units = 1)(results);
+  results = tf.keras.layers.Dense(units = 1, kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02))(results);
   return tf.keras.Model(inputs = inputs, outputs = results);
 
 class WGAN(tf.keras.Model):
