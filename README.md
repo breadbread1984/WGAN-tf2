@@ -15,6 +15,13 @@ train the model with the following command
 python3 train.py
 ```
 
+## how to convert checkpoint to h5 model
+convert with the following command
+
+```bash
+python3 save_model.py
+```
+
 ## how to test
 test the generator with the following command
 
