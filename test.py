@@ -5,7 +5,7 @@ import tensorflow as tf;
 
 def generate(batch_size = 1):
 
-  G = tf.keras.models.load_model('models/G.h5', compile = False, custom_objects = {'tf': tf});
+  G = tf.keras.models.load_model('models/G.h5', compile = False, custom_objects = {'tf': tf, 'ReLU': tf.keras.layers.ReLU});
   r = tf.random.uniform((batch_size, 128), dtype = tf.float32);
   return G(r);
 
