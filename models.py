@@ -32,8 +32,6 @@ class WGAN(tf.keras.Model):
     super(WGAN, self).__init__(**kwargs);
     self.G = Generator(input_dims, inner_channels);
     self.D = Discriminator(inner_channels);
-    self.l1 = tf.keras.losses.MeanAbsoluteError();
-    self.l2 = tf.keras.losses.MeanSquaredError();
 
   def call(self, inputs):
 
