@@ -12,18 +12,20 @@ def main():
 
   wgan = WGAN();
   optimizer = tf.keras.optimizers.Adam(learning_rate = 1e-4, beta_1 = 0.5);
-  trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(100).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE);
+  trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(-1).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE).__iter__();
   checkpoint = tf.train.Checkpoint(model = wgan, optimizer = optimizer, optimizer_step = optimizer.iterations);
   log = tf.summary.create_file_writer('checkpoints');
   avg_d_loss = tf.keras.metrics.Mean(name = 'D loss', dtype = tf.float32);
   avg_g_loss = tf.keras.metrics.Mean(name = 'G loss', dtype = tf.float32);
-  for images, _ in trainset:
-    with tf.GradientTape(persistent = True) as tape:
-      outputs = wgan(images);
-      d_loss, g_loss = wgan.loss(outputs);
-    d_grads = tape.gradient(d_loss, wgan.D.trainable_variables); avg_d_loss.update_state(d_loss);
+  while True:
+    for i in range(5):
+      images, _ = next(trainset);
+      with tf.GradientTape(persistent = True) as tape:
+        outputs = wgan(images);
+        d_loss, g_loss = wgan.loss(outputs);
+      d_grads = tape.gradient(d_loss, wgan.D.trainable_variables); avg_d_loss.update_state(d_loss);
+      optimizer.apply_gradients(zip(d_grads, wgan.D.trainable_variables));
     g_grads = tape.gradient(g_loss, wgan.G.trainable_variables); avg_g_loss.update_state(g_loss);
-    optimizer.apply_gradients(zip(d_grads, wgan.D.trainable_variables));
     optimizer.apply_gradients(zip(g_grads, wgan.G.trainable_variables));
     if tf.equal(optimizer.iterations % 100, 0):
       r = tf.random.normal((1, 128), dtype = tf.float32);
