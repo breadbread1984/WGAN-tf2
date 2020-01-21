@@ -15,8 +15,8 @@ def main():
   trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(100).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE);
   checkpoint = tf.train.Checkpoint(model = wgan, optimizer = optimizer_step = optimizer.iterations);
   log = tf.summary.create_file_writer('checkpoints');
-  avg_g_loss = tf.keras.metrics.Mean(name = 'G loss', dtype = tf.float32);
   avg_d_loss = tf.keras.metrics.Mean(name = 'D loss', dtype = tf.float32);
+  avg_g_loss = tf.keras.metrics.Mean(name = 'G loss', dtype = tf.float32);
   for images, _ in trainset:
     with tf.GradientTape(persistent = True) as tape:
       outputs = wgan(images);
