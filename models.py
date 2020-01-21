@@ -50,7 +50,7 @@ class WGAN(tf.keras.Model):
     # 1) discriminator loss
     D_real = tf.math.reduce_mean(real_pred);
     D_fake = tf.math.reduce_mean(fake_pred);
-    r = tf.random.uniform((inputs.shape[0], 1, 1, 1), dtype = tf.float32);
+    r = tf.random.uniform((real.shape[0], 1, 1, 1), dtype = tf.float32);
     interpolates = r * real + (1 - r) * fake;
     with tf.GradientTape() as g:
       g.watch(interpolates);
