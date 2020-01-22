@@ -13,7 +13,8 @@ def generate(batch_size = 1):
 if __name__ == "__main__":
 
   assert True == tf.executing_eagerly();
-  outputs = generate(batch_size = 1);
-  img = tf.cast(outputs[0], dtype = tf.uint8).numpy();
-  cv2.imshow('generated image', img);
+  outputs = generate(batch_size = 10);
+  for i in range(10):
+    img = tf.cast(outputs[i], dtype = tf.uint8).numpy();
+    cv2.imshow('generated ' + str(i) + 'th image', img);
   cv2.waitKey();

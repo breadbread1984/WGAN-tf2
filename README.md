@@ -28,3 +28,5 @@ test the generator with the following command
 ```bash
 python3 test.py
 ```
+
+a pretrained model is enclosed in directory models. test can be conducted on this file directly.
