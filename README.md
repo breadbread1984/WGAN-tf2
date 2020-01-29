@@ -1,5 +1,5 @@
 # WGAN-tf2
-this project implements the improved [improved training of wasserstein GANs](https://arxiv.org/abs/1704.00028) with tensorflow 2
+this project implements the generative model introduced in paper [improved training of wasserstein GANs](https://arxiv.org/abs/1704.00028) with tensorflow 2
 
 ## how to get dataset
 prepare the dataset with the following command
