@@ -63,8 +63,7 @@ if __name__ == "__main__":
 
   assert True == tf.executing_eagerly();
   generator = Generator();
-  import os;
-  if False == os.path.exists('models'): os.mkdir('models');
-  generator.save('models/generator.h5');
   discriminator = Discriminator();
-  discriminator.save('models/discriminator.h5');
+  tf.keras.utils.plot_model(model = generator, to_file = 'generator.png', show_shapes = False, dpi = 64);
+  tf.keras.utils.plot_model(model = discriminator, to_file = 'discriminator.png', show_shapes = False, dpi = 64);
+
