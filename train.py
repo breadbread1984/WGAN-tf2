@@ -29,7 +29,7 @@ def main():
     optimizerG.apply_gradients(zip(g_grads, wgan.G.trainable_variables));
     if tf.equal(optimizerG.iterations % 100, 0):
       r = tf.random.normal((1, 128), dtype = tf.float32);
-      fake = tf.clip_by_value(wgan.G(r) * 255.,clip_value_min = 0., clip_value_max = 255.);
+      fake = tf.clip_by_value((wgan.G(r) + 1.) * 127.5, clip_value_min = 0., clip_value_max = 255.);
       fake = tf.cast(fake, dtype = tf.uint8);
       with log.as_default():
         tf.summary.scalar('discriminator loss', avg_d_loss.result(), step = optimizerG.iterations);
