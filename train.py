@@ -13,7 +13,7 @@ def main():
   wgan = WGAN();
   optimizerG = tf.keras.optimizers.Adam(learning_rate = 1e-4, beta_1 = 0.5);
   optimizerD = tf.keras.optimizers.Adam(learning_rate = 1e-4, beta_1 = 0.5);
-  trainset = tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(-1).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE).__iter__();
+  trainset = iter(tfds.load(name = "mnist", split = tfds.Split.TRAIN, download = False).repeat(-1).map(parse_function).shuffle(batch_size).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE));
   checkpoint = tf.train.Checkpoint(model = wgan, optimizerG = optimizerG, optimizerD = optimizerD);
   log = tf.summary.create_file_writer('checkpoints');
   avg_d_loss = tf.keras.metrics.Mean(name = 'D loss', dtype = tf.float32);
