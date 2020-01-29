@@ -12,7 +12,7 @@ def Generator(input_dims = 128, inner_channels = 64):
   results = tf.keras.layers.Lambda(lambda x: x[:,:7,:7,:])(results);
   results = tf.keras.layers.Conv2DTranspose(filters = inner_channels, kernel_size = (5,5), kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), activation = tf.keras.layers.ReLU())(results);
   results = tf.keras.layers.Conv2DTranspose(filters = 1, kernel_size = (8,8), kernel_initializer = tf.keras.initializers.RandomNormal(stddev = 0.02), strides = (2,2))(results);
-  results = tf.keras.layers.Lambda(lambda x: tf.math.sigmoid(x))(results);
+  results = tf.keras.layers.Lambda(lambda x: tf.math.tanh(x))(results);
   return tf.keras.Model(inputs = inputs, outputs = results);
 
 def Discriminator(inner_channels = 128):
