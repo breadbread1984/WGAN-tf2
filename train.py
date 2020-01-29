@@ -19,14 +19,13 @@ def main():
   avg_d_loss = tf.keras.metrics.Mean(name = 'D loss', dtype = tf.float32);
   avg_g_loss = tf.keras.metrics.Mean(name = 'G loss', dtype = tf.float32);
   while True:
-    for i in range(5):
-      images, _ = next(trainset);
-      with tf.GradientTape(persistent = True) as tape:
-        outputs = wgan(images);
-        d_loss, g_loss = wgan.loss(outputs);
-      d_grads = tape.gradient(d_loss, wgan.D.trainable_variables); avg_d_loss.update_state(d_loss);
-      optimizerD.apply_gradients(zip(d_grads, wgan.D.trainable_variables));
+    images, _ = next(trainset);
+    with tf.GradientTape(persistent = True) as tape:
+      outputs = wgan(images);
+      d_loss, g_loss = wgan.loss(outputs);
+    d_grads = tape.gradient(d_loss, wgan.D.trainable_variables); avg_d_loss.update_state(d_loss);
     g_grads = tape.gradient(g_loss, wgan.G.trainable_variables); avg_g_loss.update_state(g_loss);
+    optimizerD.apply_gradients(zip(d_grads, wgan.D.trainable_variables));
     optimizerG.apply_gradients(zip(g_grads, wgan.G.trainable_variables));
     if tf.equal(optimizerG.iterations % 100, 0):
       r = tf.random.normal((1, 128), dtype = tf.float32);
