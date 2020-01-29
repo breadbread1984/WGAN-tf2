@@ -7,8 +7,9 @@ from models import WGAN;
 def save_model():
 
   wgan = WGAN();
-  optimizer = tf.keras.optimizers.Adam(2e-4);
-  checkpoint = tf.train.Checkpoint(model = wgan, optimizer = optimizer, optimizer_step = optimizer.iterations);
+  optimizerG = tf.keras.optimizers.Adam(2e-4);
+  optimizerD = tf.keras.optimizers.Adam(2e-4);
+  checkpoint = tf.train.Checkpoint(model = wgan, optimizerG = optimizerG, optimizerD = optimizerD);
   checkpoint.restore(tf.train.latest_checkpoint('checkpoints'));
   if False == os.path.exists('models'): os.mkdir('models');
   wgan.G.save(os.path.join('models', 'G.h5'));
