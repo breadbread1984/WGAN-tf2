@@ -64,6 +64,6 @@ if __name__ == "__main__":
   assert True == tf.executing_eagerly();
   generator = Generator();
   discriminator = Discriminator();
-  tf.keras.utils.plot_model(model = generator, to_file = 'generator.png', show_shapes = False, dpi = 64);
-  tf.keras.utils.plot_model(model = discriminator, to_file = 'discriminator.png', show_shapes = False, dpi = 64);
+  tf.keras.utils.plot_model(model = generator, to_file = 'generator.png', show_shapes = True, dpi = 64);
+  tf.keras.utils.plot_model(model = discriminator, to_file = 'discriminator.png', show_shapes = True, dpi = 64);
 
