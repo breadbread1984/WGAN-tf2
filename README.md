@@ -30,3 +30,25 @@ python3 test.py
 ```
 
 a pretrained model is enclosed in directory models. test can be conducted on this file directly.
+Some samples from the generator is shown here.
+
+<p align="center">
+  <table>
+    <caption>Samples</caption>
+    <tr>
+      <td><img src="pics/0.png" width = "80" /></td>
+      <td><img src="pics/1.png" width = "80" /></td>
+      <td><img src="pics/2.png" width = "80" /></td>
+      <td><img src="pics/3.png" width = "80" /></td>
+      <td><img src="pics/4.png" width = "80" /></td>
+    </tr>
+    <tr>
+      <td><img src="pics/5.png" width = "80" /></td>
+      <td><img src="pics/6.png" width = "80" /></td>
+      <td><img src="pics/7.png" width = "80" /></td>
+      <td><img src="pics/8.png" width = "80" /></td>
+      <td><img src="pics/9.png" width = "80" /></td>
+    </tr>
+  </table>
+</p>
+
